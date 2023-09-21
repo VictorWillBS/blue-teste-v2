@@ -42,6 +42,11 @@
         },
         methods: {
             getIcon(name: string) {
+                interface IIcons {
+                    dashboard(): any
+                    vendas(): any
+                    planos(): any
+                }
                 const icons = {
                     dashboard() {
                         return ViewDashboardIcon
@@ -52,9 +57,9 @@
                     planos() {
                         return MoneyBagIcon
                     },
-                }
-                if (icons[name]) {
-                    return icons[name]()
+                } satisfies IIcons
+                if (icons[name as keyof IIcons]) {
+                    return icons[name as keyof IIcons]()
                 }
             },
             checkCurrentUrl(matcher: string) {
