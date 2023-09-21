@@ -40,7 +40,7 @@
             Container,
             Card,
             DashboardTable,
-            ViewDashboardIcon,
+            ViewDashboardIcon: ViewDashboardIcon as any,
         },
         methods: { proposalFactory },
     })
