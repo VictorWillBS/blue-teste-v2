@@ -32,8 +32,9 @@
                         <NavItem
                             v-for="(value, index) in navItems"
                             :key="index"
-                            :name="value"
+                            :name="value.name"
                             :index="index"
+                            :route="value.route"
                         />
                     </ul>
                 </section>
@@ -71,7 +72,11 @@
         },
         data() {
             return {
-                navItems: ["dashboard", "vendas", "planos"],
+                navItems: [
+                    { name: "dashboard", route: "" },
+                    { name: "vendas", route: "/vendas" },
+                    { name: "planos", route: "/planos" },
+                ],
             }
         },
         methods: {

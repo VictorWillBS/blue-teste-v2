@@ -9,7 +9,7 @@
         :class="checkCurrentUrl(name)"
     >
         <component
-            :is="getIcon(name)"
+            :is="getIcon(route)"
             :size="30"
         ></component>
         <span class="text-sm font-bold capitalize">{{ name }}</span>
@@ -33,6 +33,12 @@
                     return ""
                 },
             },
+            route: {
+                type: String,
+                default() {
+                    return ""
+                },
+            },
             index: {
                 type: Number,
                 default() {
@@ -41,14 +47,16 @@
             },
         },
         methods: {
-            getIcon(name: string) {
+            getIcon(route: string) {
+                if (!route) route = "default"
+                const iconName = route.replace("/", "") as keyof IIcons
                 interface IIcons {
-                    dashboard(): any
+                    default(): any
                     vendas(): any
                     planos(): any
                 }
                 const icons = {
-                    dashboard() {
+                    default() {
                         return ViewDashboardIcon
                     },
                     vendas() {
@@ -58,12 +66,10 @@
                         return MoneyBagIcon
                     },
                 } satisfies IIcons
-                if (icons[name as keyof IIcons]) {
-                    return icons[name as keyof IIcons]()
-                }
+                return icons[iconName]()
             },
             checkCurrentUrl(matcher: string) {
-                const regEx = new RegExp(`/${matcher}`, "g")
+                const regEx = new RegExp(matcher, "g")
                 console.log(location.href, regEx)
 
                 if (regEx.test(location.href)) {
